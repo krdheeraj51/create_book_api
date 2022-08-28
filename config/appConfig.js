@@ -19,4 +19,3 @@ module.exports={
     db:appConfig.db,
     apiVersion:appConfig.apiVersion
 }
-Footer
