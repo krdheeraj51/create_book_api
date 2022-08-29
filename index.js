@@ -8,6 +8,7 @@ const cookieParser = require("cookie-parser");
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
+app.use('/uploads', express.static('uploads'));
 //model
 require("./model/User");
 require("./model/Book");
