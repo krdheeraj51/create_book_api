@@ -1,15 +1,11 @@
-const express = require("express");
-const appConfig = require("../config/appConfig");
 const response = require("../lib/response");
 const mongoose = require("mongoose");
 const jwt = require('jsonwebtoken');
-const multer = require('multer');
 const bcrypt = require('bcrypt');
 const userModel = mongoose.model("users");
 const saltRounds = 10;
 const secretKey = "SomeRandomkey";
 const BookModel = mongoose.model("books");
-const { uploadFileFilter, storage } = require('../utils/multer_config');
 const { countNumberOfPages } = require('../utils/helper')
 
 let loginUser = (req, res) => {

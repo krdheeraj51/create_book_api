@@ -14,12 +14,11 @@ const bookSchema = new Schema({
     image_url: {
         type: String,
         required: true,
-        // data:Buffer,
-        // contentType: String
+       
     },
     pdf_book: {
         type: String,
-        // required: true,
+        required: true,
     },
     author: {
         type: String,
