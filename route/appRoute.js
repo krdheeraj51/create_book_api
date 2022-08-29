@@ -9,7 +9,6 @@ let setAppRouter = (app) => {
   app.post(baseUrl + "/createUser", appController.createUser);
   app.post(baseUrl + "/addBook/:userId", uploadHandler.fields([
     { name: "image_url", maxCount: 1 }, { name: "pdf_book", maxCount: 1 }]), appController.addBookDetails);
-  app.get(baseUrl + "/allUsers", appController.getAllUsers);
   app.get(baseUrl + "/allBooks/pages/:page/limits/:limit", appController.getAllBooks);
   app.get(baseUrl + "/allBooks/:userId/pages/:page/limits/:limit", appController.getBookByUserId);
   app.get(baseUrl + "/getbook/:bookId", appController.getBookById);

@@ -17,7 +17,7 @@ const appRouter = require("./route/appRoute");
 appRouter.setAppRouter(app);
 
 app.listen(appConfig.port, () => {
-  let db = mongoose.connect(appConfig.db.uri, { useNewUrlParser: true });
+  let db = mongoose.connect(appConfig.db.uri, { useNewUrlParser: true, useUnifiedTopology: true });
 });
 //handling mongoose connection error
 mongoose.connection.on("error", (err) => {

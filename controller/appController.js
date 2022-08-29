@@ -64,7 +64,6 @@ let createUser = (req, res) => {
       res.send(apiResponse);
     })
       .catch((err) => {
-        console.log("error ::", err);
         console.log("Something going wrong ....");
         let apiResponse = response.generate(true, 'Error Occured', 500, null);
         res.send(apiResponse);
@@ -73,21 +72,6 @@ let createUser = (req, res) => {
   })
 }
 
-let getAllUsers = async (req, res) => {
-  try {
-    let userDeatils = await userModel.find().exec();
-    let apiResponse = response.generate(
-      false,
-      "All User Deatils are listed.",
-      200,
-      userDeatils
-    );
-    res.send(apiResponse);
-  } catch (err) {
-    let apiResponse = response.generate(true, "Error occured", 500, null);
-    res.send(apiResponse);
-  }
-};
 
 let addBookDetails = async (req, res) => {
   try {
@@ -364,7 +348,6 @@ const deleteBookDetailsOfUser = async (req, res) => {
 module.exports = {
   createUser,
   loginUser,
-  getAllUsers,
   addBookDetails,
   getAllBooks,
   getBookByUserId,
