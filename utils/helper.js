@@ -4,7 +4,6 @@ const countNumberOfPages = async (fileLocation) => {
     try {
         let dataBuffer = await fs.readFileSync(fileLocation);
        return pdf(dataBuffer).then(function (data) {
-            console.log("data ::", data);
             return data.numpages;
         })
 
