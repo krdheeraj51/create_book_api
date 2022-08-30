@@ -9,17 +9,14 @@ const BookModel = mongoose.model("books");
 const { countNumberOfPages } = require('../utils/helper')
 
 let loginUser = (req, res) => {
-  console.log("req ::", req.body);
   userModel.findOne({
     username: req.body.username
   }).exec((err, user) => {
-    console.log("user data  1 ::", user);
     if (err) {
       let apiResponse = response.generate(true, 'Error Occured.', 500, err);
 
       res.send(apiResponse);
     } else {
-      console.log("user data  ::", user);
       bcrypt.compare(req.body.password, user.password)
         .then((result) => {
           if (result == true) {
@@ -31,7 +28,6 @@ let loginUser = (req, res) => {
                 res.send(apiResponse);
               } else {
                 let authToken = { 'authToken': token };
-                console.log("authToken ::", authToken)
                 let apiResponse = response.generate(false, 'Login successfully done', 200, authToken);
                 res.send(apiResponse);
               }
@@ -39,7 +35,6 @@ let loginUser = (req, res) => {
           }
         })
         .catch((error) => {
-          console.log("error ::", error)
           console.log("Email or Password is wrong ...");
           let apiResponse = response.generate(true, 'Email or Password is wrong ', 200, error);
           res.send(apiResponse);
@@ -77,7 +72,6 @@ let addBookDetails = async (req, res) => {
   try {
     const { userId } = req.params;
     const numberOfpages = await countNumberOfPages(req.files.pdf_book[0].path);
-    console.log("numberOfpages ::", numberOfpages);
     let addNewBook = new BookModel({
       name: req.body.name,
       image_url: req.files.image_url[0].path,
@@ -132,7 +126,6 @@ let getAllBooks = async (req, res) => {
       try {
         paginatedArticlesList.results = await
           BookModel.find().limit(limit).skip(firstIndex).exec();
-        console.log("paginatedArticlesList ::", paginatedArticlesList);
         let bookDeatils = paginatedArticlesList.results;
         let apiResponse = response.generate(
           false,
@@ -162,7 +155,6 @@ let getAllBooks = async (req, res) => {
 
     }
   } catch (err) {
-    console.log("Error ::", err);
     let apiResponse = response.generate(true, "Error occured", 500, null);
     res.send(apiResponse);
   }
@@ -199,12 +191,10 @@ let getBookByUserId = async (req, res) => {
       );
       res.send(apiResponse);
     } catch (err) {
-      console.log("Error ::", err);
       let apiResponse = response.generate(true, "Error occured", 500, null);
       res.send(apiResponse);
     }
   } catch (err) {
-    console.log("Error ::", err);
     let apiResponse = response.generate(true, "Error occured", 500, null);
     res.send(apiResponse);
   }
@@ -213,7 +203,6 @@ let getBookByUserId = async (req, res) => {
 let getBookById = async (req, res) => {
   try {
     const { bookId } = req.params;
-    console.log("bookId ::", bookId);
     let bookDeatil = await BookModel.find({ id: bookId }).exec();
     let apiResponse = response.generate(
       false,
@@ -280,7 +269,6 @@ const updateBook = async (req, res) => {
       res.send(apiResponse);
     }
   } catch (err) {
-    console.log("error ::", err);
     let apiResponse = response.generate(
       true,
       "Failed to update Task Details",
@@ -297,7 +285,6 @@ const deleteBookDetailsOfUser = async (req, res) => {
     let dataObj = req.body;
     const { bookId } = req.params;
     let userDetail = await userModel.findOne({ id: req.body.userId });
-    console.log("userDetail ::", userDetail);
     if (!userDetail) {
       let apiResponse = response.generate(
         true,
@@ -313,9 +300,7 @@ const deleteBookDetailsOfUser = async (req, res) => {
     } else {
       filterParams = { id: bookId, userId: dataObj.userId }
     }
-    console.log("filterParams ::", filterParams);
     let deleteBookDetails = await BookModel.findOneAndDelete(filterParams)
-    console.log("deleteBookDetails ::", deleteBookDetails);
     if (deleteBookDetails) {
       let apiResponse = response.generate(
         false,
